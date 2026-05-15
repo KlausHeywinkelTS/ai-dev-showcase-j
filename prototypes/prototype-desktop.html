@@ -1,0 +1,195 @@
+<!DOCTYPE html><html class="light" lang="en" style=""><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,600;7..72,700&amp;family=Nunito+Sans:ital,wght@0,400;0,600;0,700;1,400&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+          tailwind.config = {
+            darkMode: "class",
+            theme: {
+              extend: {
+                "colors": {
+                        "on-error": "#ffffff",
+                        "on-tertiary-fixed-variant": "#554020",
+                        "tertiary-fixed": "#f8e0a8",
+                        "surface-container-highest": "#e4e0d8",
+                        "inverse-primary": "#8ecf9e",
+                        "surface-container": "#f0ece4",
+                        "on-tertiary-fixed": "#221a05",
+                        "on-secondary-fixed-variant": "#4a4538",
+                        "on-primary-fixed": "#002110",
+                        "on-background": "#2e3230",
+                        "secondary": "#6b6358",
+                        "secondary-fixed-dim": "#d4ccbf",
+                        "on-secondary-container": "#5e5548",
+                        "tertiary": "#705c30",
+                        "tertiary-fixed-dim": "#dcc48e",
+                        "on-primary-container": "#d8f0de",
+                        "on-error-container": "#690005",
+                        "tertiary-container": "#c4a66a",
+                        "outline-variant": "#c4c8bc",
+                        "surface-tint": "#4a7c59",
+                        "on-tertiary": "#ffffff",
+                        "primary-fixed": "#c8e8d0",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-surface": "#2e3230",
+                        "surface-container-low": "#f5f1ea",
+                        "primary-container": "#78a886",
+                        "error": "#b83230",
+                        "secondary-fixed": "#f0e8db",
+                        "on-surface-variant": "#4a4e4a",
+                        "surface": "#faf6f0",
+                        "on-primary-fixed-variant": "#2a6038",
+                        "on-tertiary-container": "#554020",
+                        "on-secondary": "#ffffff",
+                        "surface-variant": "#e4e0d8",
+                        "surface-container-high": "#eae6de",
+                        "outline": "#74796e",
+                        "error-container": "#ffdad8",
+                        "inverse-on-surface": "#f5f0e8",
+                        "surface-bright": "#faf6f0",
+                        "primary-fixed-dim": "#8ecf9e",
+                        "on-primary": "#ffffff",
+                        "primary": "#4a7c59",
+                        "surface-dim": "#dbd7cf",
+                        "background": "#faf6f0",
+                        "on-secondary-fixed": "#1e1a13",
+                        "secondary-container": "#f0e8db",
+                        "on-surface": "#2e3230"
+                },
+                "borderRadius": {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                },
+                "fontFamily": {
+                        "headline": ["Literata"],
+                        "display": ["Literata"],
+                        "body": ["Nunito Sans"],
+                        "label": ["Nunito Sans"]
+                }
+              },
+            },
+          }
+        </script>
+    <style>
+            body { font-family: 'Nunito Sans', sans-serif; line-height: 1.6; }
+            .font-headline { font-family: 'Literata', serif; }
+            .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        </style>
+    <style data-stitch-cursor="">*{cursor:crosshair!important}[contenteditable="true"]:focus,.cursor-text:focus{cursor:text!important}</style><style data-stitch-scroll-lock="">html,body{overflow:hidden!important}</style><style data-stitch-cursor=""></style><style data-stitch-scroll-lock=""></style></head>
+    <body class="bg-background text-on-background min-h-screen">
+    <!-- TopAppBar -->
+    <header class="bg-surface shadow-[0_4px_20px_rgba(46,50,48,0.06)] fixed top-0 w-full z-50">
+    
+    </header>
+    <!-- SideNavBar -->
+    <!-- Main Content Area -->
+    <main class="pt-24 min-h-screen bg-background">
+    <div class="max-w-7xl mx-auto p-8">
+    <header class="mb-10 flex justify-between items-end">
+    <h1 class="text-4xl font-headline font-bold text-on-background">Simple Kanban</h1>
+    <button class="bg-primary text-on-primary px-6 py-2 rounded-xl font-bold hover:scale-95 transition-transform duration-200 shadow-sm flex items-center gap-2">
+    <span class="material-symbols-outlined text-sm">add</span>
+                        New Task
+                    </button></header>
+    <!-- Kanban Board Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+    <!-- To Do Column -->
+    <section class="flex flex-col gap-4">
+    <div class="flex justify-between items-center px-2">
+    <div class="flex items-center gap-2">
+    <span class="w-3 h-3 rounded-full bg-tertiary-container"></span>
+    <h2 class="font-headline font-bold text-lg">To Do</h2>
+    <span class="bg-surface-container-high px-2 py-0.5 rounded-full text-xs font-bold text-on-surface-variant">3</span>
+    </div>
+    <button class="text-outline hover:text-primary transition-colors">
+    <span class="material-symbols-outlined">more_horiz</span>
+    </button>
+    </div>
+    <div class="flex flex-col gap-4">
+    <!-- Task Card 1 -->
+    <div class="bg-surface p-6 rounded-xl shadow-[0_4px_20px_rgba(46,50,48,0.06)] group hover:translate-y-[-2px] transition-all duration-300">
+    <div class="flex justify-between items-start mb-3">
+    <div class="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+    <button class="text-outline hover:text-primary p-1"><span class="material-symbols-outlined text-sm">edit</span></button>
+    <button class="text-outline hover:text-error p-1"><span class="material-symbols-outlined text-sm">delete</span></button>
+    </div>
+    </div>
+    <h3 class="text-lg font-headline font-bold text-on-surface mb-2">Earthen Foundation Study</h3>
+    <p class="text-on-surface-variant text-sm mb-4 line-clamp-2">Research local soil composition for stabilized earth foundation mixtures in the northeast sector.</p>
+    </div>
+    <!-- Task Card 2 -->
+    <div class="bg-surface p-6 rounded-xl shadow-[0_4px_20px_rgba(46,50,48,0.06)] group hover:translate-y-[-2px] transition-all duration-300">
+    <div class="flex justify-between items-start mb-3">
+    </div>
+    <h3 class="text-lg font-headline font-bold text-on-surface mb-2">Rainwater Collection Map</h3>
+    <p class="text-on-surface-variant text-sm mb-4 line-clamp-2">Map out the elevation lines for the new swale system to maximize natural irrigation.</p>
+    </div>
+    </div>
+    </section>
+    <!-- In Progress Column -->
+    <section class="flex flex-col gap-4">
+    <div class="flex justify-between items-center px-2">
+    <div class="flex items-center gap-2">
+    <span class="w-3 h-3 rounded-full bg-primary-container"></span>
+    <h2 class="font-headline font-bold text-lg">In Progress</h2>
+    <span class="bg-surface-container-high px-2 py-0.5 rounded-full text-xs font-bold text-on-surface-variant">1</span>
+    </div>
+    <button class="text-outline hover:text-primary transition-colors">
+    <span class="material-symbols-outlined">more_horiz</span>
+    </button>
+    </div>
+    <div class="flex flex-col gap-4">
+    <!-- Task Card 3 -->
+    <div class="bg-surface p-6 rounded-xl shadow-[0_4px_20px_rgba(46,50,48,0.06)] group border-l-4 border-primary hover:translate-y-[-2px] transition-all duration-300">
+    <div class="flex justify-between items-start mb-3">
+    <div class="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+    <button class="text-outline hover:text-primary p-1"><span class="material-symbols-outlined text-sm">edit</span></button>
+    <button class="text-outline hover:text-error p-1"><span class="material-symbols-outlined text-sm">delete</span></button>
+    </div>
+    </div>
+    <h3 class="text-lg font-headline font-bold text-on-surface mb-2">Solar Panel Array Installation</h3>
+    <p class="text-on-surface-variant text-sm mb-4 line-clamp-2">Installing the primary photovoltaic cells on the south-facing roof structure. Wiring is complete.</p>
+    
+    </div>
+    </div>
+    </section>
+    <!-- Done Column -->
+    <section class="flex flex-col gap-4">
+    <div class="flex justify-between items-center px-2">
+    <div class="flex items-center gap-2">
+    <span class="w-3 h-3 rounded-full bg-outline-variant"></span>
+    <h2 class="font-headline font-bold text-lg">Done</h2>
+    <span class="bg-surface-container-high px-2 py-0.5 rounded-full text-xs font-bold text-on-surface-variant">5</span>
+    </div>
+    <button class="text-outline hover:text-primary transition-colors">
+    <span class="material-symbols-outlined">more_horiz</span>
+    </button>
+    </div>
+    <div class="flex flex-col gap-4 opacity-75 grayscale-[0.2]">
+    <!-- Task Card 4 -->
+    <div class="bg-surface-variant p-6 rounded-xl shadow-none group">
+    <div class="flex justify-between items-start mb-3">
+    <span class="material-symbols-outlined text-primary text-lg" style="font-variation-settings: &quot;FILL&quot; 1;">check_circle</span>
+    </div>
+    <h3 class="text-lg font-headline font-bold text-on-surface-variant mb-2 line-through">Permit Approval - Phase 1</h3>
+    <p class="text-on-surface-variant text-sm mb-4 line-clamp-2">All local council permits for the structural foundation and ecological impact have been signed.</p>
+    </div>
+    </div>
+    </section>
+    </div>
+    </div>
+    </main>
+    <!-- Floating Action Button (Mobile) -->
+    <button class="md:hidden fixed bottom-8 right-8 bg-primary text-on-primary w-14 h-14 rounded-full shadow-lg flex items-center justify-center hover:scale-105 active:scale-95 transition-transform z-50">
+    <span class="material-symbols-outlined">add</span>
+    </button>
+    
+    
+    </body></html>
