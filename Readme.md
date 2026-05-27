@@ -5,6 +5,7 @@
 - Use Node.js.
 - The structure in this repo should be in a way, that it can directly deploy to the connected amplify instance.
 - Spec should be structured in modules - each module in a separat md file. There must be a md-file for UI.
+- Storage of data: in S3 in a bucket called props-demo-bucket - name of the object: tasks.json
 
 Task-List:
 
