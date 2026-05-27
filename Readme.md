@@ -1,8 +1,10 @@
 # Showcase to develop a web-app with frontend and backend
 
-Development of a simple Kanban-style to-do-list.
-Deployment on AWS Amplify Hosting with the help of the git-repo.
-Use Node.js. The structure in this repo should be in a way, that it can directly deploy to the connected amplify instance.
+- Development of a simple Kanban-style to-do-list.
+- Deployment on AWS Amplify Hosting with the help of the git-repo.
+- Use Node.js.
+- The structure in this repo should be in a way, that it can directly deploy to the connected amplify instance.
+- Spec should be structured in modules - each module in a separat md file. There must be a md-file for UI.
 
 Task-List:
 
