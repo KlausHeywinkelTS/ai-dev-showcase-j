@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+
+<html class="light" lang="de"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kanban To-Do - Productivity Flow</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "secondary-fixed-dim": "#b7c8e1",
+                "tertiary": "#943700",
+                "outline": "#737686",
+                "on-secondary-fixed-variant": "#38485d",
+                "primary-container": "#2563eb",
+                "secondary-fixed": "#d3e4fe",
+                "secondary": "#505f76",
+                "surface": "#faf8ff",
+                "on-error": "#ffffff",
+                "tertiary-fixed": "#ffdbcd",
+                "on-tertiary-fixed-variant": "#7d2d00",
+                "surface-container-lowest": "#ffffff",
+                "outline-variant": "#c3c6d7",
+                "inverse-on-surface": "#f0f0fb",
+                "surface-container": "#f1f3f9",
+                "surface-container-low": "#f8f9fc",
+                "inverse-surface": "#2e3039",
+                "primary": "#004ac6",
+                "on-primary": "#ffffff",
+                "primary-fixed": "#dbe1ff",
+                "on-surface-variant": "#434655",
+                "surface-container-highest": "#e1e2ed",
+                "on-primary-fixed-variant": "#003ea8",
+                "on-tertiary-container": "#ffede6",
+                "on-secondary-container": "#54647a",
+                "surface-container-high": "#eef1f7",
+                "on-primary-fixed": "#00174b",
+                "surface-dim": "#d9d9e5",
+                "primary-fixed-dim": "#b4c5ff",
+                "on-primary-container": "#eeefff",
+                "error-container": "#ffdad6",
+                "surface-bright": "#faf8ff",
+                "on-tertiary": "#ffffff",
+                "on-secondary": "#ffffff",
+                "error": "#ba1a1a",
+                "tertiary-fixed-dim": "#ffb596",
+                "on-background": "#191b23",
+                "surface-tint": "#0053db",
+                "tertiary-container": "#bc4800",
+                "background": "#faf8ff",
+                "surface-variant": "#e1e2ed",
+                "inverse-primary": "#b4c5ff",
+                "on-tertiary-fixed": "#360f00",
+                "on-error-container": "#93000a",
+                "secondary-container": "#d0e1fb",
+                "on-surface": "#1b1d26",
+                "on-secondary-fixed": "#0b1c30"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "2xl": "1rem",
+                "full": "9999px"
+            },
+            "spacing": {
+                "margin-page": "32px",
+                "stack-gap": "12px",
+                "gutter": "24px",
+                "column-width-fixed": "340px",
+                "base-unit": "4px",
+                "padding-card": "16px"
+            },
+            "fontFamily": {
+                "headline-md": ["Hanken Grotesk"],
+                "code-sm": ["JetBrains Mono"],
+                "body-md": ["Inter"],
+                "headline-sm": ["Hanken Grotesk"],
+                "label-caps": ["Inter"],
+                "body-lg": ["Inter"],
+                "display": ["Hanken Grotesk"]
+            },
+            "fontSize": {
+                "headline-md": ["22px", {"lineHeight": "30px", "fontWeight": "700"}],
+                "code-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                "headline-sm": ["17px", {"lineHeight": "26px", "fontWeight": "600"}],
+                "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "600"}],
+                "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                "display": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.03em", "fontWeight": "800"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .kanban-column {
+            min-width: 340px;
+        }
+        .task-card {
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+        .task-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+            border-color: rgba(0, 74, 198, 0.2);
+        }
+        .modal-overlay {
+            background-color: rgba(25, 27, 35, 0.6);
+            backdrop-filter: blur(8px);
+        }
+        .board-container::-webkit-scrollbar {
+            height: 10px;
+        }
+        .board-container::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.03);
+            border-radius: 10px;
+        }
+        .board-container::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 10px;
+            border: 3px solid transparent;
+            background-clip: padding-box;
+        }
+        .board-container::-webkit-scrollbar-thumb:hover {
+            background: #9ca3af;
+            background-clip: padding-box;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md min-h-screen flex flex-col antialiased">
+<!-- Error Banner -->
+<div class="hidden sticky top-0 z-[60] bg-error text-on-error px-margin-page py-3 flex justify-between items-center shadow-lg" id="error-banner">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined">report</span>
+<span class="font-medium">Fehler beim Speichern. Bitte erneut versuchen.</span>
+</div>
+<button class="p-1 hover:bg-white/20 rounded-full transition-colors" onclick="document.getElementById('error-banner').classList.add('hidden')">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<!-- Side Navigation -->
+<aside class="hidden lg:flex flex-col h-screen w-column-width-fixed fixed left-0 top-0 bg-white border-r border-outline-variant/60 p-6 gap-6 z-40">
+<div class="flex items-center gap-4 mb-6">
+<div class="w-12 h-12 bg-primary flex items-center justify-center text-white rounded-2xl shadow-indigo-100 shadow-xl">
+<span class="material-symbols-outlined text-2xl">grid_view</span>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-sm text-on-surface tracking-tight">Project Alpha</h2>
+<p class="text-[12px] text-on-surface-variant/80 font-medium">Engineering Team</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-4 px-5 py-3.5 bg-primary/5 text-primary rounded-xl font-semibold transition-all group" href="#">
+<span class="material-symbols-outlined text-[22px]">dashboard</span>
+<span>Boards</span>
+</a>
+<a class="flex items-center gap-4 px-5 py-3.5 text-on-surface-variant hover:bg-surface-container-high/50 hover:text-on-surface rounded-xl font-medium transition-all group" href="#">
+<span class="material-symbols-outlined text-[22px]">analytics</span>
+<span>Analyse</span>
+</a>
+<a class="flex items-center gap-4 px-5 py-3.5 text-on-surface-variant hover:bg-surface-container-high/50 hover:text-on-surface rounded-xl font-medium transition-all group" href="#">
+<span class="material-symbols-outlined text-[22px]">group</span>
+<span>Team</span>
+</a>
+<a class="flex items-center gap-4 px-5 py-3.5 text-on-surface-variant hover:bg-surface-container-high/50 hover:text-on-surface rounded-xl font-medium transition-all group" href="#">
+<span class="material-symbols-outlined text-[22px]">settings</span>
+<span>Einstellungen</span>
+</a>
+</nav>
+<div class="mt-auto p-5 bg-gradient-to-br from-primary-fixed to-white border border-outline-variant/30 rounded-2xl">
+<p class="font-semibold text-primary mb-1">Upgrade Plan</p>
+<p class="text-[12px] text-on-surface-variant mb-4 leading-relaxed">Erhalten Sie unbegrenzte Boards und erweiterte Analysen.</p>
+<button class="w-full py-2.5 bg-primary text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-primary/20 transition-all active:scale-[0.98]">Upgrade</button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="lg:ml-[340px] flex-1 flex flex-col">
+<!-- Top Nav Bar -->
+<header class="flex justify-between items-center w-full px-margin-page py-6 sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-outline-variant/30">
+<div class="flex items-center gap-3">
+<h1 class="font-display text-headline-md text-on-surface">Kanban To-Do</h1>
+<span class="hidden md:block w-px h-6 bg-outline-variant/50 mx-2"></span>
+<div class="hidden md:flex items-center gap-2 text-on-surface-variant/70" id="loading-indicator">
+<span class="animate-spin material-symbols-outlined text-[18px]">sync</span>
+<span class="text-[13px] font-medium">Synchronisiere...</span>
+</div>
+</div>
+<div class="flex items-center gap-5">
+<button class="flex items-center gap-2 px-6 py-2.5 bg-primary text-white rounded-xl font-semibold hover:shadow-xl hover:shadow-primary/25 active:scale-95 transition-all" onclick="toggleModal(true)">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>Neue Aufgabe</span>
+</button>
+<div class="flex items-center gap-3 pl-5 border-l border-outline-variant/40">
+<button class="p-2.5 text-on-surface-variant hover:bg-surface-container-high/60 rounded-xl transition-all relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2.5 right-2.5 w-2 h-2 bg-error rounded-full border-2 border-white"></span>
+</button>
+<img alt="Nutzerprofil" class="w-10 h-10 rounded-full object-cover border-2 border-surface-container-highest shadow-sm hover:ring-4 hover:ring-primary/10 transition-all cursor-pointer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBscg-9F13mHLFp3NNwuC_mVJEieqRwEQsx9IquR7c0QlCUL0gyDW24wQmQ7v18JhnjW2--eu9LBy9zlvB5FBLAt6c-ExJiO0rYuxnqSqlUtKn51zjN8hufPfeFVSts_ZL0gVGBYORKQL-SmH-4qWXgsdZGWbYReAQLrRqH79RCkKgFbjZaGRodGudHMJ0UDBDEpSIuoUDOaoLaE8-LrTk4LU0IYbFB0umZ1u9hgmCRKxzQCfuKp-3ULOvxtPEAPNXAa1DhkKNZg2vu"/>
+</div>
+</div>
+</header>
+<!-- Kanban Board Container -->
+<div class="board-container flex-1 overflow-x-auto overflow-y-hidden p-margin-page bg-surface-container-low">
+<div class="flex h-full gap-gutter items-start">
+<!-- Column: To Do -->
+<section class="kanban-column flex flex-col max-h-full bg-surface-container/40 border border-outline-variant/40 rounded-2xl p-4">
+<header class="flex justify-between items-center mb-5 px-1.5">
+<div class="flex items-center gap-3">
+<h2 class="font-headline-sm text-on-surface">To Do</h2>
+<span class="bg-surface-container-highest text-on-surface-variant font-bold text-[11px] px-2.5 py-0.5 rounded-full ring-1 ring-outline-variant/20">2</span>
+</div>
+<button class="text-on-surface-variant hover:bg-white/80 p-1.5 rounded-lg transition-colors">
+<span class="material-symbols-outlined text-[20px]">more_horiz</span>
+</button>
+</header>
+<div class="flex flex-col gap-stack-gap overflow-y-auto pr-1 pb-4">
+<!-- Card 1 -->
+<div class="task-card bg-white p-padding-card rounded-xl border border-outline-variant/30 shadow-sm relative overflow-hidden group">
+<div class="absolute left-0 top-0 bottom-0 w-1.5 bg-primary"></div>
+<div class="flex justify-between items-start mb-3">
+<span class="font-label-caps text-[10px] text-on-surface-variant/70 tracking-widest font-bold uppercase">FEAT-102</span>
+<span class="bg-primary/10 text-primary text-[10px] px-2.5 py-0.5 rounded-full font-bold uppercase">To Do</span>
+</div>
+<h3 class="font-headline-sm text-[16px] text-on-surface mb-1.5 leading-snug group-hover:text-primary transition-colors">Auth Flow implementieren</h3>
+<p class="text-body-md text-on-surface-variant/80 line-clamp-2 mb-4 leading-relaxed">Entwicklung der OAuth2-Integration mit Google- und GitHub-Providern.</p>
+<div class="flex items-center gap-2 text-[11px] font-medium text-on-surface-variant/60 mb-5">
+<span class="material-symbols-outlined text-[16px] text-outline">event</span>
+<span>Geändert: 24. Okt 2023</span>
+</div>
+<div class="flex items-center justify-between pt-3 border-t border-surface-container-high">
+<div class="flex gap-1.5">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container hover:text-primary rounded-lg transition-all" title="Bearbeiten">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-error/10 hover:text-error rounded-lg transition-all" title="Löschen">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+<button class="flex items-center gap-1.5 px-3 py-1.5 text-primary hover:bg-primary hover:text-white rounded-lg font-bold text-[11px] uppercase tracking-wider transition-all">
+                                    Verschieben
+                                    <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="task-card bg-white p-padding-card rounded-xl border border-outline-variant/30 shadow-sm relative overflow-hidden group">
+<div class="absolute left-0 top-0 bottom-0 w-1.5 bg-tertiary"></div>
+<div class="flex justify-between items-start mb-3">
+<span class="font-label-caps text-[10px] text-on-surface-variant/70 tracking-widest font-bold uppercase">BUG-404</span>
+<span class="bg-tertiary/10 text-tertiary text-[10px] px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider">Priorität</span>
+</div>
+<h3 class="font-headline-sm text-[16px] text-on-surface mb-1.5 leading-snug group-hover:text-tertiary transition-colors">CSS Grid Bug in Safari</h3>
+<p class="text-body-md text-on-surface-variant/80 line-clamp-2 mb-4 leading-relaxed">Spalten überlappen in Safari 15.2 und älter auf mobilen Geräten.</p>
+<div class="flex items-center gap-2 text-[11px] font-medium text-on-surface-variant/60 mb-5">
+<span class="material-symbols-outlined text-[16px] text-outline">event</span>
+<span>Geändert: 25. Okt 2023</span>
+</div>
+<div class="flex items-center justify-between pt-3 border-t border-surface-container-high">
+<div class="flex gap-1.5">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container hover:text-primary rounded-lg transition-all">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-error/10 hover:text-error rounded-lg transition-all">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+<button class="flex items-center gap-1.5 px-3 py-1.5 text-primary hover:bg-primary hover:text-white rounded-lg font-bold text-[11px] uppercase tracking-wider transition-all">
+                                    Verschieben
+                                    <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Column: In Progress -->
+<section class="kanban-column flex flex-col max-h-full bg-surface-container/40 border border-outline-variant/40 rounded-2xl p-4">
+<header class="flex justify-between items-center mb-5 px-1.5">
+<div class="flex items-center gap-3">
+<h2 class="font-headline-sm text-on-surface">In Bearbeitung</h2>
+<span class="bg-secondary-container text-on-secondary-container font-bold text-[11px] px-2.5 py-0.5 rounded-full ring-1 ring-secondary/20">1</span>
+</div>
+<button class="text-on-surface-variant hover:bg-white/80 p-1.5 rounded-lg transition-colors">
+<span class="material-symbols-outlined text-[20px]">more_horiz</span>
+</button>
+</header>
+<div class="flex flex-col gap-stack-gap overflow-y-auto pr-1 pb-4">
+<div class="task-card bg-white p-padding-card rounded-xl border border-outline-variant/30 shadow-sm relative overflow-hidden group">
+<div class="absolute left-0 top-0 bottom-0 w-1.5 bg-secondary"></div>
+<div class="flex justify-between items-start mb-3">
+<span class="font-label-caps text-[10px] text-on-surface-variant/70 tracking-widest font-bold uppercase">DESIGN-05</span>
+<span class="bg-secondary/10 text-secondary text-[10px] px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider">In Arbeit</span>
+</div>
+<h3 class="font-headline-sm text-[16px] text-on-surface mb-1.5 leading-snug group-hover:text-secondary transition-colors">Dark Mode Audit</h3>
+<p class="text-body-md text-on-surface-variant/80 line-clamp-2 mb-4 leading-relaxed">Überprüfung aller Kontrastverhältnisse für das kommende Dark-Mode-Release.</p>
+<div class="flex items-center gap-2 text-[11px] font-medium text-on-surface-variant/60 mb-5">
+<span class="material-symbols-outlined text-[16px] text-outline">event</span>
+<span>Geändert: 26. Okt 2023</span>
+</div>
+<div class="flex items-center justify-between pt-3 border-t border-surface-container-high">
+<button class="flex items-center gap-1.5 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container rounded-lg font-bold text-[11px] uppercase tracking-wider transition-all">
+<span class="material-symbols-outlined text-[14px]">arrow_back</span>
+                                    Zurück
+                                </button>
+<div class="flex gap-1.5">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container rounded-lg transition-all">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+</div>
+<button class="flex items-center gap-1.5 px-3 py-1.5 text-primary hover:bg-primary hover:text-white rounded-lg font-bold text-[11px] uppercase tracking-wider transition-all">
+                                    Verschieben
+                                    <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Column: Done -->
+<section class="kanban-column flex flex-col max-h-full bg-surface-container/40 border border-outline-variant/40 rounded-2xl p-4">
+<header class="flex justify-between items-center mb-5 px-1.5">
+<div class="flex items-center gap-3">
+<h2 class="font-headline-sm text-on-surface">Erledigt</h2>
+<span class="bg-surface-container-highest text-on-surface-variant font-bold text-[11px] px-2.5 py-0.5 rounded-full ring-1 ring-outline-variant/20">0</span>
+</div>
+<button class="text-on-surface-variant hover:bg-white/80 p-1.5 rounded-lg transition-colors">
+<span class="material-symbols-outlined text-[20px]">more_horiz</span>
+</button>
+</header>
+<!-- Empty State Modernized -->
+<div class="flex-1 flex flex-col items-center justify-center text-center p-8 bg-white/40 border-2 border-dashed border-outline-variant/40 rounded-2xl min-h-[300px]">
+<div class="w-20 h-20 bg-surface-container-high/40 rounded-full flex items-center justify-center mb-5 text-outline-variant/80">
+<span class="material-symbols-outlined text-[42px]" style="font-variation-settings: 'wght' 200;">check_circle</span>
+</div>
+<h4 class="text-on-surface font-semibold mb-2">Bereit für Erfolge</h4>
+<p class="text-on-surface-variant text-[13px] leading-relaxed max-w-[200px]">Noch keine Aufgaben abgeschlossen. Ziehen Sie Karten hierher, um sie zu erledigen.</p>
+</div>
+</section>
+</div>
+</div>
+</main>
+<!-- Modal Overlay -->
+<div class="hidden fixed inset-0 z-[100] modal-overlay flex items-center justify-center p-6" id="task-modal">
+<div class="bg-white w-full max-w-[540px] rounded-2xl shadow-2xl border border-outline-variant/40 overflow-hidden animate-in fade-in zoom-in-95 duration-300">
+<header class="px-8 py-5 border-b border-outline-variant/20 flex justify-between items-center bg-surface-container-lowest">
+<div>
+<h2 class="font-headline-md text-on-surface">Neue Aufgabe erstellen</h2>
+<p class="text-[13px] text-on-surface-variant">Füllen Sie die Details unten aus.</p>
+</div>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-high rounded-full transition-all" onclick="toggleModal(false)">
+<span class="material-symbols-outlined">close</span>
+</button>
+</header>
+<form class="p-8 flex flex-col gap-6" id="task-form">
+<div class="space-y-1.5">
+<label class="block font-semibold text-[13px] text-on-surface-variant ml-1" for="task-title">Titel</label>
+<input class="w-full bg-surface-container-low border border-outline-variant/40 rounded-xl px-4 py-3 focus:ring-4 focus:ring-primary/10 focus:border-primary outline-none transition-all text-on-surface placeholder:text-on-surface-variant/40" id="task-title" placeholder="Was muss getan werden?" required="" type="text"/>
+</div>
+<div class="space-y-1.5">
+<label class="block font-semibold text-[13px] text-on-surface-variant ml-1" for="task-desc">Beschreibung</label>
+<textarea class="w-full bg-surface-container-low border border-outline-variant/40 rounded-xl px-4 py-3 focus:ring-4 focus:ring-primary/10 focus:border-primary outline-none transition-all text-on-surface placeholder:text-on-surface-variant/40 resize-none" id="task-desc" placeholder="Geben Sie etwas Kontext..." rows="4"></textarea>
+</div>
+<div class="space-y-1.5">
+<label class="block font-semibold text-[13px] text-on-surface-variant ml-1" for="task-status">Status</label>
+<div class="relative">
+<select class="w-full bg-surface-container-low border border-outline-variant/40 rounded-xl px-4 py-3 focus:ring-4 focus:ring-primary/10 focus:border-primary outline-none transition-all text-on-surface appearance-none cursor-pointer" id="task-status">
+<option value="todo">To Do</option>
+<option value="progress">In Bearbeitung</option>
+<option value="done">Erledigt</option>
+</select>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">expand_more</span>
+</div>
+</div>
+<div class="flex justify-end gap-3 mt-4 pt-4 border-t border-outline-variant/10">
+<button class="px-6 py-2.5 text-on-surface font-semibold hover:bg-surface-container-high rounded-xl transition-all" onclick="toggleModal(false)" type="button">
+                        Abbrechen
+                    </button>
+<button class="px-8 py-2.5 bg-primary text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-primary/20 active:scale-95 transition-all" type="submit">
+                        Aufgabe speichern
+                    </button>
+</div>
+</form>
+</div>
+</div>
+<!-- Scripts -->
+<script>
+        function toggleModal(show) {
+            const modal = document.getElementById('task-modal');
+            if (show) {
+                modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            } else {
+                modal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // Simulate a loading state finishing
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                const indicator = document.getElementById('loading-indicator');
+                indicator.classList.add('opacity-0');
+                setTimeout(() => {
+                    indicator.classList.add('hidden');
+                }, 500);
+            }, 1500);
+        });
+
+        // Form submission simulation
+        document.getElementById('task-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            toggleModal(false);
+            
+            // Randomly show error for demonstration
+            if (Math.random() > 0.8) {
+                const banner = document.getElementById('error-banner');
+                banner.classList.remove('hidden');
+                setTimeout(() => {
+                    banner.classList.add('hidden');
+                }, 4000);
+            }
+        });
+
+        // Keyboard accessibility
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') toggleModal(false);
+        });
+    </script>
+</body></html>

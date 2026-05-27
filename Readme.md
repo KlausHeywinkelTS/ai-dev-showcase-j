@@ -12,3 +12,29 @@ Task-List:
 - The spec should contain a todo-list that is structured in a way that after each task there's something to deploy and to test.
 - Each task has a status "open" or "closed" and detailed acceptance criteria.
 - Tasks are located in a directory "tasks" with sub-dirs "open" and "closed"
+
+## Local Development
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Start the local development server:
+
+```bash
+npm run dev
+```
+
+Run the static type check:
+
+```bash
+npm test
+```
+
+Create a production build:
+
+```bash
+npm run build
+```
